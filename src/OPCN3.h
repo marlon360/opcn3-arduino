@@ -62,6 +62,9 @@ struct DACandPowerStatus
     uint8_t laserSwitch;
     uint8_t gainAndAutoGainToggleSetting;
     bool valid;
+
+    String toString();
+
 };
 
 struct FanDigitalPotShutdownState

@@ -59,21 +59,7 @@ void OPCN3::initialize()
 struct DACandPowerStatus OPCN3::readDACandPowerStatus()
 {
     DACandPowerStatus dACandPowerStatus = sendCommand<DACandPowerStatus>(0X13, 0X13, 6);
-    Serial.print("Validity: ");
-    Serial.println(dACandPowerStatus.valid);
-    Serial.print("Fan: ");
-    Serial.print(dACandPowerStatus.fanOn);
-    Serial.print(", LaserDac: ");
-    Serial.print(dACandPowerStatus.laserDACOn);
-    Serial.print(", FanDAcVal: ");
-    Serial.print(dACandPowerStatus.fanDACVal);
-    Serial.print(", laserDACVal ");
-    Serial.print(dACandPowerStatus.laserDACVal);
-    Serial.print(", Laser Switch: ");
-    Serial.print(dACandPowerStatus.laserSwitch);
-    Serial.print(", gain and autogain toggle setting: ");
-    Serial.print(dACandPowerStatus.gainAndAutoGainToggleSetting);
-    Serial.print(" ");
+    Serial.println(dACandPowerStatus.toString());
     return dACandPowerStatus;
 }
 
@@ -479,9 +465,32 @@ float HistogramData::getTempC()
 }
 float HistogramData::getTempF()
 {
-    return -49 + 347 * (data.temperature / (pow(2, 16) - 1));
+    return -49 + 347 * (temperature / (pow(2, 16) - 1));
 }
 float HistogramData::getHumidity()
 {
-    return 100 * (data.humidity / (pow(2, 16) - 1));
+    return 100 * (humidity / (pow(2, 16) - 1));
+}
+
+String DACandPowerStatus::toString()
+{
+    String info = "-----DACandPowerStatus-----\n";
+    info += "Validity: ";
+    info += valid;
+    info += "\n";
+    info += "Fan: ";
+    info += fanOn;
+    info += ", LaserDac: ";
+    info += laserDACOn;
+    info += ", FanDAcVal: ";
+    info += fanDACVal;
+    info += ", laserDACVal ";
+    info += laserDACVal;
+    info += ", Laser Switch: ";
+    info += laserSwitch;
+    info += ", gain and autogain toggle setting: ";
+    info += gainAndAutoGainToggleSetting;
+    info += "\n";
+    info += "----------";
+    return info;
 }
