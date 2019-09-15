@@ -9,6 +9,7 @@ class OPCN3
 private:
     uint8_t _ssPin;
     uint32_t _speedMaximum;
+    String serial;
     void beginTransfer();
     void endTransfer();
     bool validate(byte arrayOne[], byte arrayTwo[], int size);
@@ -49,6 +50,7 @@ public:
     struct SerialNumber readSerialNumber();
     struct ConfigurationVariables readConfigurationVariables();
     bool resetHistogram();
+    String getSerialNumber();
 };
 
 struct DACandPowerStatus

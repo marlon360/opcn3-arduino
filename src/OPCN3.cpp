@@ -29,6 +29,8 @@ void OPCN3::initialize()
     begin();
     delay(1000);
     readSerialNumber();
+    Serial.println("Serial Number:");
+    Serial.println(getSerialNumber());
     delay(1000);
     Serial.println("DACandPowerStatus");
     readDACandPowerStatus();
@@ -244,11 +246,18 @@ struct SerialNumber OPCN3::readSerialNumber()
     SerialNumber serialNumber = sendCommand<SerialNumber>(0X10, 0X10, 60);
     Serial.print("Validity: ");
     Serial.println(serialNumber.valid);
+    String info = "";
     for (int i = 0; i < 60; i++)
     {
-        Serial.print(serialNumber.serial[i]);
+        info += String(serialNumber.serial[i]);
     }
-    Serial.println("");
+    serial = info;
+    return serialNumber;
+}
+
+String OPCN3::getSerialNumber()
+{
+    return serial;
 }
 
 struct ConfigurationVariables OPCN3::readConfigurationVariables()
