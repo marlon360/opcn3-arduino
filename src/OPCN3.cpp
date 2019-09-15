@@ -30,17 +30,22 @@ void OPCN3::initialize()
     delay(1000);
     readSerialNumber();
     delay(1000);
-    Serial.println("ConfigurationVariables");
-    readConfigurationVariables();
-    delay(1000);
     Serial.println("DACandPowerStatus");
     readDACandPowerStatus();
+    delay(1000);
+    Serial.println("ConfigurationVariables");
+    readConfigurationVariables();
+    delay(4000);
+    Serial.println("");
     delay(10000);
     Serial.println("Turn Fan on");
     struct FanDigitalPotShutdownState fanState = setFanDigitalPotShutdownState(true);
     delay(1000);
     Serial.println("Turn Laser on");
     struct LaserDigitalPotShutdownState laserState = setLaserDigitalPotShutdownState(true);
+    delay(1000);
+    Serial.println("Turn Laser Switch on");
+    struct LaserPowerSwitchState laserPowerState = setLaserPowerSwitchState(true);
     delay(1000);
     Serial.println("High Gain");
     struct HighLowGainState gainState = setHighLowGainState(true);
@@ -54,16 +59,17 @@ struct DACandPowerStatus OPCN3::readDACandPowerStatus()
     DACandPowerStatus dACandPowerStatus = sendCommand<DACandPowerStatus>(0X13, 0X13, 6);
     Serial.print("Validity: ");
     Serial.println(dACandPowerStatus.valid);
+    Serial.print("Fan: ");
     Serial.print(dACandPowerStatus.fanOn);
-    Serial.print(" ");
+    Serial.print(", LaserDac: ");
     Serial.print(dACandPowerStatus.laserDACOn);
-    Serial.print(" ");
+    Serial.print(", FanDAcVal: ");
     Serial.print(dACandPowerStatus.fanDACVal);
-    Serial.print(" ");
+    Serial.print(", laserDACVal ");
     Serial.print(dACandPowerStatus.laserDACVal);
-    Serial.print(" ");
+    Serial.print(", Laser Switch: ");
     Serial.print(dACandPowerStatus.laserSwitch);
-    Serial.print(" ");
+    Serial.print(", gain and autogain toggle setting: ");
     Serial.print(dACandPowerStatus.gainAndAutoGainToggleSetting);
     Serial.print(" ");
     return dACandPowerStatus;
@@ -93,9 +99,21 @@ struct LaserDigitalPotShutdownState OPCN3::setLaserDigitalPotShutdownState(bool 
     return laserDigitalPotShutdownState;
 }
 
-struct HighLowGainState OPCN3::setHighLowGainState(bool status)
+struct LaserPowerSwitchState OPCN3::setLaserPowerSwitchState(bool status)
 {
     byte commandByte = status ? 0X07 : 0X06;
+    LaserPowerSwitchState laserPowerSwitchState = sendCommand<LaserPowerSwitchState>(0X03, commandByte, 1);
+    laserPowerSwitchState.laserOn = status;
+    Serial.print("Validity: ");
+    Serial.println(laserPowerSwitchState.valid);
+    Serial.print(laserPowerSwitchState.laserOn);
+    Serial.print(" ");
+    return laserPowerSwitchState;
+}
+
+struct HighLowGainState OPCN3::setHighLowGainState(bool status)
+{
+    byte commandByte = status ? 0X10 : 0X11;
     HighLowGainState highLowGainState = sendCommand<HighLowGainState>(0X03, commandByte, 1);
     highLowGainState.highLow = status;
     Serial.print("Validity: ");

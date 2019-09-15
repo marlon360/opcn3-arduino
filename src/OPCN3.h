@@ -43,6 +43,7 @@ public:
     struct DACandPowerStatus readDACandPowerStatus();
     struct FanDigitalPotShutdownState setFanDigitalPotShutdownState(bool status);
     struct LaserDigitalPotShutdownState setLaserDigitalPotShutdownState(bool status);
+    struct LaserPowerSwitchState setLaserPowerSwitchState(bool status);
     struct HighLowGainState setHighLowGainState(bool status);
     struct HistogramData readHistogramData();
     struct SerialNumber readSerialNumber();
@@ -68,6 +69,12 @@ struct FanDigitalPotShutdownState
 };
 
 struct LaserDigitalPotShutdownState
+{
+    bool laserOn;
+    bool valid;
+};
+
+struct LaserPowerSwitchState
 {
     bool laserOn;
     bool valid;
