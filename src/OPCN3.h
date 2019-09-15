@@ -49,6 +49,9 @@ public:
     struct HistogramData readHistogramData();
     struct SerialNumber readSerialNumber();
     struct ConfigurationVariables readConfigurationVariables();
+    float getTempC(HistogramData data);
+    float getTempF(HistogramData data);
+    float getHumidity(HistogramData data);
     bool resetHistogram();
     String getSerialNumber();
 };

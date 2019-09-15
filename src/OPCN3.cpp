@@ -447,6 +447,18 @@ struct ConfigurationVariables OPCN3::readConfigurationVariables()
     return configurationVariables;
 }
 
+float OPCN3::getTempC(HistogramData data) {
+    return -45 + 175 * (data.temperature / (pow(2,16) - 1));
+}
+
+float OPCN3::getTempF(HistogramData data) {
+    return -49 + 347 * (data.temperature / (pow(2,16) - 1));
+}
+
+float OPCN3::getHumidity(HistogramData data) {
+    return 100 * (data.humidity / (pow(2,16) - 1));
+}
+
 void OPCN3::beginTransfer()
 {
     digitalWrite(_ssPin, LOW);
