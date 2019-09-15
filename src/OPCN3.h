@@ -49,9 +49,6 @@ public:
     struct HistogramData readHistogramData();
     struct SerialNumber readSerialNumber();
     struct ConfigurationVariables readConfigurationVariables();
-    float getTempC(HistogramData data);
-    float getTempF(HistogramData data);
-    float getHumidity(HistogramData data);
     bool resetHistogram();
     String getSerialNumber();
 };
@@ -147,6 +144,10 @@ struct HistogramData
     uint16_t laserStatus;
     uint16_t checkSum;
     bool valid;
+
+    float getTempC();
+    float getTempF();
+    float getHumidity();
 };
 
 struct ConfigurationVariables
