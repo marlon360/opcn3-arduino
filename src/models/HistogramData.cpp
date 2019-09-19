@@ -15,7 +15,7 @@ float HistogramData::getHumidity()
 
 String HistogramData::toString() {
 
-    String info = "-----DACandPowerStatus-----\n";
+    String info = "-----Histogram Data-----\n";
     info += "Validity: ";
     info += valid;
     info += "\n";
