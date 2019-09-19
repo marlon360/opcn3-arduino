@@ -93,4 +93,6 @@ struct ConfigurationVariables
     uint8_t AMFanOnInIdle;
 
     bool valid;
+
+    String toString();
 };
