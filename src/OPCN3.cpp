@@ -458,39 +458,3 @@ bool OPCN3::validate(byte arrayOne[], byte arrayTwo[], int size)
 
     return valid;
 }
-
-float HistogramData::getTempC()
-{
-    return -45 + 175 * (temperature / (pow(2, 16) - 1));
-}
-float HistogramData::getTempF()
-{
-    return -49 + 347 * (temperature / (pow(2, 16) - 1));
-}
-float HistogramData::getHumidity()
-{
-    return 100 * (humidity / (pow(2, 16) - 1));
-}
-
-String DACandPowerStatus::toString()
-{
-    String info = "-----DACandPowerStatus-----\n";
-    info += "Validity: ";
-    info += valid;
-    info += "\n";
-    info += "Fan: ";
-    info += fanOn;
-    info += ", LaserDac: ";
-    info += laserDACOn;
-    info += ", FanDAcVal: ";
-    info += fanDACVal;
-    info += ", laserDACVal ";
-    info += laserDACVal;
-    info += ", Laser Switch: ";
-    info += laserSwitch;
-    info += ", gain and autogain toggle setting: ";
-    info += gainAndAutoGainToggleSetting;
-    info += "\n";
-    info += "----------";
-    return info;
-}
