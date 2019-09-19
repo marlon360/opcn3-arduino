@@ -54,4 +54,6 @@ struct HistogramData
     float getTempC();
     float getTempF();
     float getHumidity();
+
+    String toString();
 };
